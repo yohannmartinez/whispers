@@ -1,7 +1,8 @@
 import { Slot, Redirect, useSegments } from "expo-router";
 import { View, ActivityIndicator } from "react-native";
-import "../global.css";
 import { AuthProvider, useAuth } from "../lib/contexts/auth";
+import "../global.css";
+import "../lib/i18n";
 
 function AuthGate() {
   const { session, isReady } = useAuth();

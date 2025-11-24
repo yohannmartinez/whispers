@@ -18,7 +18,7 @@ export default {
     ios: {
       supportsTablet: true,
       usesAppleSignIn: true,
-      bundleIdentifier: "com.whispers.app",
+      bundleIdentifier: "com.whispers.principal",
     },
     android: {
       adaptiveIcon: {
