@@ -1,19 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../supabase/client";
 import type { Session } from "@supabase/supabase-js";
-import * as WebBrowser from "expo-web-browser";
-
-WebBrowser.maybeCompleteAuthSession();
-
-const redirectUrl = "whispers-app://login";
-
-type AuthContextValue = {
-  session: Session | null;
-  isReady: boolean;
-  signInWithGoogle: () => Promise<void>;
-  signInWithApple: () => Promise<void>;
-  signOut: () => Promise<void>;
-};
+import { AuthContextValue, OAUTH_PROVIDERS } from "../types/auth";
+import { oauthFlow } from "../helpers/auth/oAuth";
+import { syncUserProfile } from "../helpers/auth/syncUserProfile";
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
@@ -30,8 +20,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } = supabase.auth.onAuthStateChange((event, newSession) => {
       if (!isMounted) return;
 
-      console.log("onAuthStateChange:", event, newSession?.user?.email);
       setSession(newSession);
+
+      if (
+        (event === "SIGNED_IN" || event === "USER_UPDATED") &&
+        newSession?.user
+      ) {
+        syncUserProfile(newSession.user).catch((err) => {
+          console.error("syncUserProfile error:", err);
+        });
+      }
 
       if (!hasInitial) {
         hasInitial = true;
@@ -45,50 +43,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
-  const oauthFlow = async (provider: "google" | "apple") => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider,
-      options: {
-        redirectTo: redirectUrl,
-        skipBrowserRedirect: true,
-      },
-    });
-
-    if (error) {
-      console.error(`signInWithOAuth ${provider} error:`, error);
-      throw error;
-    }
-
-    const res = await WebBrowser.openAuthSessionAsync(
-      data?.url ?? "",
-      redirectUrl
-    );
-
-    console.log(`openAuthSessionAsync (${provider}):`, res);
-
-    if (res.type === "success" && res.url) {
-      const hash = res.url.split("#")[1] ?? "";
-      const params = new URLSearchParams(hash);
-
-      const access_token = params.get("access_token");
-      const refresh_token = params.get("refresh_token") ?? undefined;
-
-      if (access_token) {
-        const { error: sessionError } = await supabase.auth.setSession({
-          access_token,
-          refresh_token,
-        });
-
-        if (sessionError) {
-          console.error("setSession error:", sessionError);
-          throw sessionError;
-        }
-      }
-    }
-  };
-
-  const signInWithGoogle = () => oauthFlow("google");
-  const signInWithApple = () => oauthFlow("apple");
+  const signInWithGoogle = () => oauthFlow(OAUTH_PROVIDERS.GOOGLE);
+  const signInWithApple = () => oauthFlow(OAUTH_PROVIDERS.APPLE);
 
   const signOut = async () => {
     await supabase.auth.signOut();

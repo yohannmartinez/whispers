@@ -1,5 +1,15 @@
 {
-  "welcome": "Bienvenue",
-  "login_title": "Connexion",
-  "logout": "Déconnexion"
+  "login": {
+    "actions": {
+      "login": "Se connecter avec {{provider}}"
+    }
+  },
+  "termsOfUse": {
+    "title": "Nos conditions générales d'utilisation",
+    "text": "Whispers recueille et utilise tes données lors de ton inscription et lorsque tu utilises l’application afin de : \n– te fournir ses services et son assistance ; \n– te proposer des contenus personnalisés et pertinents, notamment pour améliorer l’expérience, afficher des recommandations, et, le cas échéant, des communications promotionnelles ;\n– optimiser notre compréhension de l’utilisation faite de notre application, l’améliorer et en assurer la sécurité, notamment grâce à la localisation nécessaire au fonctionnement de Whispers.\n\nTu peux paramétrer certaines utilisations de tes données dans l’onglet « Gérer mes choix » dans ton profil.\n\nLes informations recueillies sont destinées à Whispers et à ses prestataires techniques, situés dans et en dehors de l’Union Européenne.\nTu bénéficies d’un droit d’accès, de rectification et de suppression des informations te concernant et, le cas échéant, d’un droit d’opposition, de portabilité de tes données, de limitation du traitement ainsi que de la faculté de définir des directives relatives au sort de tes données.",
+    "termsText": "En t'inscrivant, tu acceptes nos Conditions générales d'utilisation et notre Politique de confidentialité.",
+    "actions": {
+      "accept": "J'accepte les conditions"
+    }
+  }
 }

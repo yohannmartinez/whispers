@@ -3,6 +3,8 @@ import { View, ActivityIndicator } from "react-native";
 import { AuthProvider, useAuth } from "../lib/contexts/auth";
 import "../global.css";
 import "../lib/i18n";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 function AuthGate() {
   const { session, isReady } = useAuth();
@@ -33,7 +35,11 @@ function AuthGate() {
 export default function RootLayout() {
   return (
     <AuthProvider>
-      <AuthGate />
+      <SafeAreaProvider>
+        <GestureHandlerRootView className="flex">
+          <AuthGate />
+        </GestureHandlerRootView>
+      </SafeAreaProvider>
     </AuthProvider>
   );
 }
