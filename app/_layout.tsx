@@ -1,10 +1,11 @@
 import { Slot, Redirect, useSegments } from "expo-router";
 import { View, ActivityIndicator } from "react-native";
 import { AuthProvider, useAuth } from "../lib/contexts/auth";
-import "../global.css";
-import "../lib/i18n";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import "../global.css";
+import "../lib/i18n";
+import "../lib/mapbox/client";
 
 function AuthGate() {
   const { session, isReady } = useAuth();

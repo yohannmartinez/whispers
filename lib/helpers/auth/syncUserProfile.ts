@@ -1,5 +1,6 @@
 import { supabase } from "../../supabase/client";
 import type { User } from "@supabase/supabase-js";
+import { splitName } from "../profile/name";
 
 /**
  * Sync user table from session
@@ -8,19 +9,31 @@ import type { User } from "@supabase/supabase-js";
 export const syncUserProfile = async (user: User) => {
   const { id, email, user_metadata } = user;
 
-  const full_name = user_metadata?.full_name ?? user_metadata?.name ?? "";
+  const fullName =
+    user_metadata?.full_name ??
+    user_metadata?.name ??
+    `${user_metadata?.given_name ?? ""} ${
+      user_metadata?.family_name ?? ""
+    }`.trim();
 
-  const avatar_url =
-    user_metadata?.avatar_url ?? user_metadata?.picture ?? null;
+  const { firstname, lastname } = splitName(fullName);
 
-  const { error: upsertError } = await supabase.from("users").upsert(
+  const now = new Date().toISOString();
+
+  const { error: upsertError } = await supabase.from("profiles").upsert(
     {
       id,
       email,
-      full_name,
-      avatar_url,
+      firstname,
+      lastname,
+      bio: "",
+      isIncognito: false,
+      lastActiveAt: now,
+      updatedAt: now,
     },
-    { onConflict: "id" }
+    {
+      onConflict: "id",
+    }
   );
 
   if (upsertError) {

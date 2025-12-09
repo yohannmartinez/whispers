@@ -13,14 +13,29 @@ import {
   enablePushNotificationsAccess,
   isPushNotificationAccessEnabled,
 } from "../../lib/helpers/permissions/pushNotificationsPermissions";
+import { router } from "expo-router";
 
 export default function HomeScreen() {
-  const { signOut } = useAuth();
+  const { signOut, session } = useAuth();
   const { t } = useTranslation();
 
   return (
     <View className="flex-1 items-center justify-center bg-white">
       <Text className="text-2xl mb-4">{t("welcome")}</Text>
+
+      <Pressable
+        onPress={async () => router.push("/map")}
+        className="bg-blue-500 px-4 py-2 rounded"
+      >
+        <Text className="text-white">go sur la map</Text>
+      </Pressable>
+
+      <Pressable
+        onPress={async () => console.log("session:", session)}
+        className="bg-blue-500 px-4 py-2 rounded"
+      >
+        <Text className="text-white">log session</Text>
+      </Pressable>
 
       <Pressable
         onPress={() => enableGalleryAccess()}
