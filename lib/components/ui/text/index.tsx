@@ -6,7 +6,7 @@ const StyledText = styled(RNText);
 
 const sizeMap = {
   xs: "text-[12px] leading-6",
-  sm: "text-[14px] leading-6",
+  sm: "text-[14px] leading-7",
   md: "text-[17px]",
   lg: "text-[20px]",
   xl: "text-[24px]",

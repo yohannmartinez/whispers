@@ -18,6 +18,7 @@ interface GlassButtonProps extends PressableProps {
   pressableClassName?: string;
   radius?: number;
   loading?: boolean;
+  intensity?: number;
 }
 
 export default function GlassButton({
@@ -25,6 +26,7 @@ export default function GlassButton({
   className,
   loading = false,
   radius,
+  intensity = 25,
   ...pressableProps
 }: GlassButtonProps) {
   const [size, setSize] = useState({ width: 0, height: 0 });
@@ -38,7 +40,11 @@ export default function GlassButton({
     radius !== undefined && radius !== null ? radius : size.height / 2 || 9999;
 
   return (
-    <View className={`self-start ${className ?? ""}`}>
+    <View
+      className={`self-start ${className ?? ""} ${
+        pressableProps.disabled && "opacity-[0.5]"
+      }`}
+    >
       <View
         style={{
           borderRadius: computedRadius,
@@ -46,7 +52,7 @@ export default function GlassButton({
         }}
       >
         <GlassBlur
-          intensity={25}
+          intensity={intensity}
           tint="dark"
           style={{ borderRadius: computedRadius }}
         >

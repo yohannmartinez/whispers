@@ -4,6 +4,7 @@
 export const GENDERS = {
   MALE: "male",
   FEMALE: "female",
+  NON_BINARY: "non_binary",
 } as const;
 
 /**

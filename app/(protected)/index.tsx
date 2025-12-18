@@ -1,5 +1,4 @@
 import { View, Text, Pressable } from "react-native";
-import { useAuth } from "../../lib/contexts/auth";
 import { useTranslation } from "react-i18next";
 import {
   enableForegroundPermissionsAccess,
@@ -14,6 +13,7 @@ import {
   isPushNotificationAccessEnabled,
 } from "../../lib/helpers/permissions/pushNotificationsPermissions";
 import { router } from "expo-router";
+import { useAuth } from "../../lib/hooks/auth";
 
 export default function HomeScreen() {
   const { signOut, session } = useAuth();

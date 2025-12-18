@@ -1,4 +1,11 @@
 {
+  "global": {
+    "genders": {
+      "male": "Homme",
+      "female": "Femme",
+      "non_binary": "Non binaire"
+    }
+  },
   "login": {
     "actions": {
       "login": "Se connecter avec {{provider}}"
@@ -10,6 +17,35 @@
     "termsText": "En t'inscrivant, tu acceptes nos Conditions générales d'utilisation et notre Politique de confidentialité.",
     "actions": {
       "accept": "J'accepte les conditions"
+    }
+  },
+  "unboarding": {
+    "birthday": {
+      "title": "Veuillez indiquer votre date de naissance",
+      "description": "Cette date sera utilisée pour les critères d’âge des autres utilisateurs"
+    },
+    "profileGender": {
+      "title": "Quel est votre genre ?",
+      "description": "Cette information sera utilisée pour les critères de recherche des autres utilisateurs"
+    },
+    "agePreference": {
+      "title": "Quelle tranche d'âge recherchez vous ?",
+      "description": "Cette réponse influencera la recherche des profils"
+    },
+    "genderPreference": {
+      "title": "Quelle genre recherchez vous ?",
+      "description": "Cette réponse influencera la recherche des profils"
+    },
+    "profilePictures": {
+      "title": "C'est le moment d'ajouter vos plus beaux clichés",
+      "description": "(Au moins une photo est nécessaire pour accéder à l'app)"
+    },
+    "autorisations": {
+      "title": "Bienvenue sur Whispers",
+      "description": "Tu as finalisé toutes les étapes avec brio, tu peux maintenant profiter de toutes les fonctionnalités de l'app"
+    },
+    "actions": {
+      "continue": "Continuer"
     }
   }
 }

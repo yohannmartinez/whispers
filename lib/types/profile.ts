@@ -100,7 +100,7 @@ export type ProfilePicture = {
   /**
    * Identifier of the user to whom the picture belongs
    */
-  userId: string;
+  profileId: string;
   /**
    * URL of the profile picture
    */

@@ -5,14 +5,14 @@ import {
   StyleSheet,
 } from "react-native";
 import { useEffect, useRef, useState } from "react";
-import { useAuth } from "../lib/contexts/auth";
-import { OAUTH_PROVIDERS, OAuthProviders } from "../lib/types/auth";
-import GlassButton from "../lib/components/ui/glass/button";
+import { OAUTH_PROVIDERS, OAuthProviders } from "../../lib/types/auth";
+import GlassButton from "../../lib/components/ui/glass/button";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
-import GlassBottomSheet from "../lib/components/ui/glass/bottomSheet";
+import GlassBottomSheet from "../../lib/components/ui/glass/bottomSheet";
 import { useTranslation } from "react-i18next";
-import Text from "../lib/components/ui/text";
-import { capitalizeFirstLetter } from "../lib/helpers/text";
+import Text from "../../lib/components/ui/text";
+import { capitalizeFirstLetter } from "../../lib/helpers/text";
+import { useAuth } from "../../lib/hooks/auth";
 
 export default function LoginScreen() {
   const { t } = useTranslation();
@@ -53,9 +53,9 @@ export default function LoginScreen() {
   return (
     <View className="flex-1 bg-[#050505]">
       <ImageBackground
-        source={require("../assets/background.png")}
+        source={require("../../assets/background.png")}
         resizeMode="cover"
-        style={StyleSheet.absoluteFillObject}
+        style={[StyleSheet.absoluteFillObject, { pointerEvents: "none" }]}
       />
 
       <View className="flex flex-1 items-center justify-end p-10 gap-5">

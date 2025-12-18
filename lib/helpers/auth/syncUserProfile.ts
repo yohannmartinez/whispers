@@ -1,6 +1,7 @@
 import { supabase } from "../../supabase/client";
 import type { User } from "@supabase/supabase-js";
 import { splitName } from "../profile/name";
+import { RELATION_TYPES } from "../../types/relationType";
 
 /**
  * Sync user table from session
@@ -17,10 +18,9 @@ export const syncUserProfile = async (user: User) => {
     }`.trim();
 
   const { firstname, lastname } = splitName(fullName);
-
   const now = new Date().toISOString();
 
-  const { error: upsertError } = await supabase.from("profiles").upsert(
+  const { error: upsertProfileError } = await supabase.from("profiles").upsert(
     {
       id,
       email,
@@ -33,10 +33,33 @@ export const syncUserProfile = async (user: User) => {
     },
     {
       onConflict: "id",
+      ignoreDuplicates: true,
     }
   );
 
-  if (upsertError) {
-    console.error("upsert user error:", upsertError);
+  if (upsertProfileError) {
+    console.error("upsert profile error:", upsertProfileError);
+  }
+
+  const { error: upsertPreferencesError } = await supabase
+    .from("profilePreferences")
+    .upsert(
+      {
+        profileId: id,
+        minAge: 18,
+        maxAge: 99,
+        createdAt: now,
+        updatedAt: now,
+        relationType: [RELATION_TYPES.CASUAL, RELATION_TYPES.SERIOUS],
+        gender: [],
+      },
+      {
+        onConflict: "profileId",
+        ignoreDuplicates: true,
+      }
+    );
+
+  if (upsertPreferencesError) {
+    console.error("upsert profile preferences error:", upsertPreferencesError);
   }
 };
